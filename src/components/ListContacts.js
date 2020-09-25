@@ -53,11 +53,11 @@ class ListContacts extends Component{
                         }}
                     />
                     <a
+                        className='add-contact'
                         href='#create'
                         onClick={()=>{
                             onNavigate();
                         }}
-                        className='add-contact'
                     >
                         Add Contact
                     </a>
