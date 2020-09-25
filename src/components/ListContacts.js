@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import propTypes from 'prop-types';
 
+
 class ListContacts extends Component{
 
     constructor(props) {
@@ -30,7 +31,7 @@ class ListContacts extends Component{
     }
 
     render(){
-        let {contacts,onDeleteContact} = this.props;
+        let {contacts,onDeleteContact,onNavigate} = this.props;
         let {query} =  this.state;
 
         let showingContacts = query === ''
@@ -51,6 +52,15 @@ class ListContacts extends Component{
                             this.updateQuery(event.target.value)
                         }}
                     />
+                    <a
+                        href='#create'
+                        onClick={()=>{
+                            onNavigate();
+                        }}
+                        className='add-contact'
+                    >
+                        Add Contact
+                    </a>
                 </div>
                 {showingContacts.length !== contacts.length && (
                     <div className='showing-contacts'>
