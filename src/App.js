@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import ListContacts from "./components/ListContacts";
+import * as ContactsAPI from "./utils/ContactsAPI";
 
 
 class App extends Component {
@@ -8,29 +9,23 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state={
-      contacts: [
-        {
-          "id": "karen",
-          "name": "Karen Isgrigg",
-          "handle": "@karen_isgrigg",
-          "avatarURL": "http://localhost:5001/karen.jpg"
-        },
-        {
-          "id": "richard",
-          "name": "Richard Kalehoff",
-          "handle": "@richardkalehoff",
-          "avatarURL": "http://localhost:5001/richard.jpg"
-        },
-        {
-          "id": "tyler",
-          "name": "Tyler McGinnis",
-          "handle": "@tylermcginnis",
-          "avatarURL": "http://localhost:5001/tyler.jpg"
-        }
-      ]
+      contacts: []
     }
 
+
     this.removeContact = this.removeContact.bind(this)
+  }
+
+  componentDidMount(){
+    ContactsAPI.getAll()
+        .then((contacts)=>{
+          this.setState(()=>{
+            return {
+              contacts
+            }
+          })
+        })
+
   }
 
   removeContact = (contact)=>{
@@ -38,6 +33,8 @@ class App extends Component {
     this.setState((currentState)=>{
       return {contacts: currentState.contacts.filter((person)=>{return person.id !== contact.id})}
     })
+
+    ContactsAPI.remove(contact)
 
 
   }
